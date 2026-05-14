@@ -6,6 +6,13 @@ import { Bookmark } from "@/components/markdown/bookmark";
 import { YouTube } from "@/components/markdown/youtube";
 import { Media } from "@/components/markdown/media";
 import { Code } from "./code";
+import { CTABox } from "@/components/monetization/CTABox";
+import { AffiliateDisclosure } from "@/components/monetization/AffiliateDisclosure";
+import { ProductCard } from "@/components/monetization/ProductCard";
+import {
+  ComparisonTable,
+  type ComparisonItem,
+} from "@/components/monetization/ComparisonTable";
 
 import React from "react";
 import type { StaticImageData } from "next/image";
@@ -104,6 +111,71 @@ const sharedComponents = {
     fill?: boolean;
   }) => {
     return <Media src={src} alt={alt} className={className} fill={fill} />;
+  },
+  CTABox: ({
+    title,
+    description,
+    buttonText,
+    href,
+    variant,
+  }: {
+    title?: string;
+    description?: string;
+    buttonText?: string;
+    href?: string;
+    variant?: "default" | "highlight" | "subtle";
+  }) => {
+    return (
+      <CTABox
+        title={title}
+        description={description}
+        buttonText={buttonText}
+        href={href}
+        variant={variant}
+      />
+    );
+  },
+  AffiliateDisclosure: ({
+    variant,
+  }: {
+    variant?: "box" | "inline" | "footer";
+  }) => {
+    return <AffiliateDisclosure variant={variant} />;
+  },
+  ProductCard: ({
+    name,
+    description,
+    priceLabel,
+    href,
+    badge,
+    buttonText,
+  }: {
+    name: string;
+    description: string;
+    priceLabel?: string;
+    href: string;
+    badge?: string;
+    buttonText?: string;
+  }) => {
+    return (
+      <ProductCard
+        name={name}
+        description={description}
+        priceLabel={priceLabel}
+        href={href}
+        badge={badge}
+        buttonText={buttonText}
+      />
+    );
+  },
+  ComparisonTable: ({
+    items,
+    buttonText,
+  }: {
+    items: ComparisonItem[];
+    buttonText?: string;
+  }) => {
+    return <ComparisonTable items={items} buttonText={buttonText} />;
   },
 };
 

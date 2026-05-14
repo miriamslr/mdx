@@ -47,9 +47,13 @@ export const Nav = ({
   </nav>
 );
 
-export const Layout = ({ children, className, style }: DSProps) => (
+interface LayoutProps extends DSProps {
+  lang?: string;
+}
+
+export const Layout = ({ children, className, style, lang = "pt-BR" }: LayoutProps) => (
   <html
-    lang="en"
+    lang={lang}
     suppressHydrationWarning
     className={cn("scroll-smooth antialiased focus:scroll-auto", className)}
     style={style}

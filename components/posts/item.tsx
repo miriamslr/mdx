@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatDate } from "@/lib/mdx";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import { Clock } from "lucide-react";
 
 interface PostItemProps {
   slug: string;
@@ -10,6 +11,7 @@ interface PostItemProps {
   excerpt?: string;
   className?: string;
   tags?: string[];
+  readingTime?: number;
 }
 
 const PostDate = ({ date }: { date: string }) => {
@@ -41,28 +43,46 @@ export const Item = ({
   excerpt,
   className,
   tags,
+  readingTime,
 }: PostItemProps) => {
   return (
     <Link
       href={`/${slug}`}
       className={cn(
-        "group grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-start",
-        "transition-colors hover:bg-muted/50 hover:text-primary px-3 py-2",
+        "group flex flex-col h-full p-5 rounded-xl border bg-card",
+        "transition-all hover:shadow-md hover:border-primary/30",
         className
       )}
     >
-      <div className="group-hover:pl-1 group-hover:-mr-1 transition-all">
-        <h3 className="font-medium">{title}</h3>
+      <div className="flex-1 space-y-3">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <PostDate date={date} />
+          {readingTime && (
+            <>
+              <span aria-hidden="true">•</span>
+              <span className="inline-flex items-center gap-1">
+                <Clock className="h-3 w-3" />
+                {readingTime} min
+              </span>
+            </>
+          )}
+        </div>
+        <h3 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+          {title}
+        </h3>
         {excerpt && (
-          <p className="text-sm text-muted-foreground line-clamp-1 mt-1">
+          <p className="text-sm text-muted-foreground line-clamp-2">
             {excerpt}
           </p>
         )}
       </div>
 
-      <div className="flex flex-col gap-2 items-start md:items-end text-left md:text-right">
-        <PostDate date={date} />
-        {tags && <PostTags tags={tags} />}
+      <div className="mt-4 pt-4 border-t">
+        {tags ? (
+          <PostTags tags={tags} />
+        ) : (
+          <span className="text-xs text-muted-foreground">Leia mais →</span>
+        )}
       </div>
     </Link>
   );

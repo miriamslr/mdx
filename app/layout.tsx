@@ -3,6 +3,8 @@ import { Layout, Main } from "@/components/ds";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/site/footer";
+import { WebsiteJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
+import { siteConfig } from "@/lib/site.config";
 
 import type { Metadata } from "next";
 
@@ -12,11 +14,45 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: {
-    default: "MDX Starter Template for Building Websites",
-    template: "%s | MDX Starter",
+    default: `${siteConfig.name} - Micro sites para SEO e monetização`,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "MDX and Next.js Starter made by Bridger Tower at 9d8 and WIP / AC",
+  description: siteConfig.description,
+  keywords: [
+    "micro sites",
+    "SEO",
+    "monetização",
+    "conteúdo",
+    "afiliados",
+    "marketing digital",
+  ],
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  metadataBase: new URL(siteConfig.domain),
+  openGraph: {
+    type: "website",
+    locale: siteConfig.language,
+    url: siteConfig.domain,
+    siteName: siteConfig.name,
+    title: siteConfig.name,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +61,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Layout>
+    <Layout lang={siteConfig.language}>
+      <WebsiteJsonLd />
+      <OrganizationJsonLd />
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased w-screen flex flex-col",
@@ -39,6 +77,9 @@ export default function RootLayout({
         >
           <Main className="flex-1">{children}</Main>
           <Footer />
+          <div className="text-xs text-muted-foreground border-t py-4 px-6 text-center">
+            {siteConfig.affiliate.disclosure}
+          </div>
           <div className="fixed bottom-6 right-6">
             <ThemeToggle />
           </div>

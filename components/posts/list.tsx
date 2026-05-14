@@ -4,13 +4,22 @@ import { Item } from "@/components/posts/item";
 import type { Post } from "#site/content";
 
 export const List = ({ posts }: { posts: Post[] }) => {
+  const recentPosts = posts.slice(0, 6);
+
   return (
-    <Section>
-      <Container className="space-y-6">
-        <h2 className="text-2xl font-semibold tracking-tight">Recent Posts</h2>
-        {posts.length > 0 ? (
-          <ul className="border divide-y rounded-lg">
-            {posts.map((post) => (
+    <Section className="bg-muted/20">
+      <Container className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Artigos recentes</h2>
+            <p className="text-muted-foreground mt-1">
+              Guias práticos para aplicar no seu negócio
+            </p>
+          </div>
+        </div>
+        {recentPosts.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recentPosts.map((post) => (
               <Item
                 key={post.slug}
                 slug={post.slug}
@@ -20,7 +29,7 @@ export const List = ({ posts }: { posts: Post[] }) => {
                 tags={post.tags}
               />
             ))}
-          </ul>
+          </div>
         ) : (
           <NoPosts />
         )}
