@@ -1,7 +1,6 @@
 "use client";
 
-import { Section, Container, Prose } from "@/components/ds";
-import { siteConfig } from "@/lib/site.config";
+import { Section, Container } from "@/components/ds";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {

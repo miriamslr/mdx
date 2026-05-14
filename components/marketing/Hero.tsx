@@ -1,7 +1,6 @@
 "use client";
 
 import { Section, Container } from "@/components/ds";
-import { siteConfig } from "@/lib/site.config";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";

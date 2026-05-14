@@ -1,5 +1,5 @@
 import { Section, Container } from "@/components/ds";
-import { Item } from "@/components/posts/item";
+import { PostList } from "@/components/posts/PostList";
 
 import type { Post } from "#site/content";
 
@@ -18,18 +18,7 @@ export const List = ({ posts }: { posts: Post[] }) => {
           </div>
         </div>
         {recentPosts.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentPosts.map((post) => (
-              <Item
-                key={post.slug}
-                slug={post.slug}
-                title={post.title}
-                date={post.date}
-                excerpt={post.description}
-                tags={post.tags}
-              />
-            ))}
-          </div>
+          <PostList posts={recentPosts} />
         ) : (
           <NoPosts />
         )}
@@ -41,11 +30,10 @@ export const List = ({ posts }: { posts: Post[] }) => {
 const NoPosts = () => {
   return (
     <p className="text-muted-foreground">
-      No posts yet. Create your first post in the{" "}
+      Nenhum artigo publicado ainda. Crie seu primeiro post na pasta{" "}
       <code className="rounded bg-muted px-2 py-1 font-mono text-sm">
         content/
-      </code>
-      directory.
+      </code>.
     </p>
   );
 };

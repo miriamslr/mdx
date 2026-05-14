@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/site/footer";
 import { WebsiteJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
 import { siteConfig } from "@/lib/site.config";
+import { createMetadata } from "@/lib/seo";
 
 import type { Metadata } from "next";
 
@@ -13,45 +14,10 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
+  ...createMetadata(),
   title: {
     default: `${siteConfig.name} - Micro sites para SEO e monetização`,
     template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "micro sites",
-    "SEO",
-    "monetização",
-    "conteúdo",
-    "afiliados",
-    "marketing digital",
-  ],
-  authors: [{ name: siteConfig.author }],
-  creator: siteConfig.author,
-  metadataBase: new URL(siteConfig.domain),
-  openGraph: {
-    type: "website",
-    locale: siteConfig.language,
-    url: siteConfig.domain,
-    siteName: siteConfig.name,
-    title: siteConfig.name,
-    description: siteConfig.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 

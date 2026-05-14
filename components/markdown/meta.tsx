@@ -6,15 +6,24 @@ import { CopyArticleButton } from "./copy-article-button";
 import { ShareButton } from "./share-button";
 
 import Link from "next/link";
-import { Home } from "lucide-react";
+import { Clock, Home } from "lucide-react";
 
 interface MetaProps extends PageMeta {
   className?: string;
   slug?: string;
+  readingTime?: number;
 }
 
-export function Meta({ title, description, date, author, tags, slug }: MetaProps) {
-  const hasMeta = date || author || (tags && tags.length > 0);
+export function Meta({
+  title,
+  description,
+  date,
+  author,
+  tags,
+  slug,
+  readingTime,
+}: MetaProps) {
+  const hasMeta = date || author || readingTime || (tags && tags.length > 0);
 
   return (
     <Section className="border-b bg-muted/50">
@@ -26,6 +35,12 @@ export function Meta({ title, description, date, author, tags, slug }: MetaProps
             <div className="flex flex-wrap items-center gap-6">
               {date && <time dateTime={date}>{formatDate(date)}</time>}
               {author && <span>{author}</span>}
+              {readingTime && (
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  {readingTime} min de leitura
+                </span>
+              )}
               <div className="flex gap-1">
                 {tags?.map((tag) => (
                   <Badge key={tag}>{tag}</Badge>

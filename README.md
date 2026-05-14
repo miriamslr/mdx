@@ -267,6 +267,151 @@ pnpm start    # Start production server
 pnpm lint     # Run ESLint
 ```
 
+## Como usar este starter para criar um micro site SEO
+
+Este projeto mantém a base do `brijr/mdx` com Next.js, Velite, MDX, Tailwind e shadcn/ui, mas adiciona uma estrutura inicial para micro sites de conteúdo, SEO programático, comparativos, ferramentas simples e captura de leads.
+
+### 1. Alterar a configuração central do site
+
+Edite `lib/site.config.ts` para personalizar:
+
+- **Nome e domínio**: `name`, `domain`
+- **Descrição padrão**: `description`
+- **Nicho**: `niche`
+- **Autor e idioma**: `author`, `language`
+- **Monetização**: `affiliate`, `leadCapture`, `digitalProduct`
+- **Categorias e navegação**: `categories`, `navigation`
+
+O SEO global usa essa configuração por meio de `lib/seo.ts`.
+
+### 2. Criar um novo post MDX
+
+Crie um arquivo em `content/blog/`, por exemplo:
+
+```mdx
+---
+title: "Como escolher ferramentas de IA para pequenos negócios"
+description: "Guia prático para comparar ferramentas de IA considerando preço, rotina e objetivos."
+date: "2025-05-20"
+author: "Miriam Rodrigues"
+tags: ["IA", "ferramentas", "pequenos negócios"]
+published: true
+---
+
+# Como escolher ferramentas de IA para pequenos negócios
+
+Escreva o conteúdo com headings claros, exemplos úteis e links internos.
+```
+
+Campos aceitos pelo Velite:
+
+- `title`
+- `description`
+- `date`
+- `author`
+- `tags`
+- `published`
+
+### 3. Usar CTABox em MDX
+
+`CTABox` está registrado em `components/markdown/mdx-content.tsx`, então pode ser usado diretamente:
+
+```mdx
+<CTABox
+  title="Quer aplicar isso no seu negócio?"
+  description="Baixe um checklist gratuito para começar com mais clareza."
+  buttonText="Baixar checklist"
+  href="#lead-capture"
+  variant="highlight"
+/>
+```
+
+Também estão disponíveis para MDX:
+
+- `AffiliateDisclosure`
+- `ProductCard`
+- `ComparisonTable`
+
+### 4. Criar uma nova página programática
+
+As páginas programáticas ficam em `app/guias/[slug]/page.tsx` e são geradas a partir de `data/pseo/ia-use-cases.ts`.
+
+Para adicionar uma nova página, inclua um item em `iaUseCases`:
+
+```ts
+{
+  slug: "ia-para-contadores",
+  title: "IA para contadores: produtividade e atendimento",
+  description: "Como escritórios contábeis podem usar IA em tarefas repetitivas.",
+  audience: "contadores e escritórios contábeis",
+  painPoints: ["Muitas tarefas repetitivas", "Dúvidas frequentes de clientes"],
+  benefits: ["Respostas mais rápidas", "Processos mais padronizados"],
+  tools: ["ChatGPT", "Claude", "Gemini"],
+  cta: {
+    title: "Quer automatizar respostas?",
+    description: "Teste o gerador de resposta para clientes.",
+    buttonText: "Testar ferramenta",
+    href: "/ferramentas/gerador-resposta-cliente",
+  },
+}
+```
+
+Depois disso, a página estará disponível em `/guias/ia-para-contadores` e entrará automaticamente no sitemap.
+
+### 5. Estrutura editorial disponível
+
+- `/blog`: lista todos os posts publicados
+- `/tags`: lista todas as tags
+- `/tags/[tag]`: lista posts por tag
+- páginas MDX: renderizadas por `app/[...slug]/page.tsx`
+- posts relacionados: calculados por tags
+- leitura estimada: calculada a partir do conteúdo MDX
+- navegação anterior/próximo: baseada na ordem cronológica dos posts
+
+### 6. SEO técnico
+
+O arquivo `lib/seo.ts` centraliza:
+
+- `createMetadata()`
+- `createCanonicalUrl()`
+- `createOpenGraph()`
+- `createArticleJsonLd()`
+- `createBreadcrumbJsonLd()`
+
+O projeto usa os padrões nativos do Next.js:
+
+- `app/sitemap.ts`
+- `app/robots.ts`
+- `generateMetadata()` em rotas dinâmicas
+
+### 7. Rodar o projeto
+
+```bash
+pnpm dev
+```
+
+### 8. Validar antes de publicar
+
+```bash
+pnpm lint
+pnpm build
+```
+
+Observação: em versões recentes do Next.js, `next lint` pode não funcionar como em versões anteriores. Se isso acontecer, valide principalmente com:
+
+```bash
+pnpm build
+```
+
+### 9. Próximos passos recomendados
+
+- **Domínio real**: Atualizar `siteConfig.domain` ou configurar `NEXT_PUBLIC_SITE_URL`
+- **Lead capture real**: Integrar o formulário com uma ferramenta de e-mail
+- **Afiliados**: Substituir `href="#"` por links reais e manter disclosure visível
+- **Conteúdo escalável**: Expandir `data/pseo/ia-use-cases.ts` com pesquisa de palavras-chave
+- **Analytics**: Adicionar ferramenta de métricas antes de escalar produção
+- **Auditoria SEO**: Validar sitemap, canonical, metadata e JSON-LD após deploy
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details

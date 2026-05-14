@@ -1,5 +1,4 @@
 import { Section, Container, Prose } from "@/components/ds";
-import { siteConfig } from "@/lib/site.config";
 import { AffiliateDisclosure } from "@/components/monetization/AffiliateDisclosure";
 import { CTABox } from "@/components/monetization/CTABox";
 import {

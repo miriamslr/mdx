@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Highlight, themes } from "prism-react-renderer";
 import { Check, Copy } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
@@ -19,12 +19,12 @@ export function Code({
   language = "typescript",
 }: CodeProps) {
   const [hasCopied, setHasCopied] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
   const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Use a default theme during SSR to prevent hydration mismatch
   // After mount, use the resolved theme

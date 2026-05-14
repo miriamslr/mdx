@@ -24,7 +24,7 @@
     "dev": "concurrently \"velite --watch\" \"next dev --turbopack\"",
     "build": "velite && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
